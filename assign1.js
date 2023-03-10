@@ -3,15 +3,14 @@ function getType(data) {
     if (typeof data === "string") {
         if(data === "true" || data === "false")
             return "불리언";
+        else if(data.indexOf('{') != -1 && data.indexOf('}') != -1){
+            return "객체";
+        }
         else {
             return "문자열";     
         }
-    } else if (typeof data === "number") {
-        return "숫자";
     } else if (Array.isArray(data)) {
-        return "배열";
-    } else if (typeof data === "object") {
-        return "객체";
+        return "배열"; 
     } else if (typeof data === "function") {
         return "함수";
     } else {
