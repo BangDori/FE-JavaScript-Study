@@ -2,7 +2,7 @@
 const range = 100;
 let randomNumber = getRandom();
 // entered nums
-let inputArr = [];
+const inputArr = [];  //const 교체
 
 // 입력 = input
 // 출력 = entered, result
@@ -16,11 +16,6 @@ input.placeholder = `1 ~ ${range}`;
 
 inputForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    console.log(randomNumber);
-    console.dir(inputForm);
-    console.dir(entered);
-    console.dir(result);
 
     const inputNum = Number(input.value);
 
@@ -50,7 +45,7 @@ inputForm.addEventListener('submit', (e) => {
 reset.addEventListener('click', (e) => {
     e.preventDefault();
 
-    inputArr = [];
+    inputArr.splice(0);
     randomNumber = getRandom();
     gameReset();
 });
@@ -62,7 +57,8 @@ reset.addEventListener('click', (e) => {
  */
 function checkRange(value) {
     if (value < 1 || value > range) return false;
-    else return true;
+
+    return true;
 }
 
 /**
@@ -116,9 +112,12 @@ function setEntered(value) {
 function setResult(value) {
     result.innerText = value;
 }
-function resetEntered() {
-    entered.innerText = '';
-}
+
+const resetEntered = () => entered.innerText = '';
+
+// function resetEntered() {
+//     entered.innerText = '';
+// }
 function resetInput() {
     input.value = null;
 }
