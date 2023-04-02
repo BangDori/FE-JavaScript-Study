@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        /* Style the button color */
+        :root {
+            --button_color: #f0f0f0;
+            --border_color: #ccc;
+        }
+
+        /* Style the calendar container */
+        .calendar {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--border_color);
+            padding: 10px;
+        }
+
+        /* Style the navigation bar */
+        .nav-bar {
+            width: 100%;
+            table-layout: fixed;
+            text-align: center;
+        }
+
+        /* Style the navigation buttons */
+        .nav-button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--button_color);
+            border: 1px solid var(--border_color);
+            cursor: pointer;
+        }
+
+        #this-month,
+        #this-year {
+            width: 110px;
+            padding: 5px 0px;
+        }
+
+        /* Style the calendar table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Style the table headers */
+        tr {
+            width: 100%;
+            table-layout: fixed;
+            display: table;
+        }
+
+        /* Style the table headers */
+        th {
+            display: table-cell;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid var(--border_color);
+        }
+
+        /* Style the table cells */
+        td {
+            height: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid var(--border_color);
+        }
+
+        /* Style the account book */
+        .account-book {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--border_color);
+            padding: 10px;
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .account-book .record {
+            width: 49.25%;
+            margin: 0px;
+            border: none;
+            padding: 0px;
+            text-align: center;
+        }
+
+        .account-book .record .record {
+            width: auto;
+            margin: 0 auto;
+            border: none;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calendar" id="calendar">
+
+        <div class="nav-bar" id="nav-bar">
+            <button class="nav-button" id="prev-month">&lt;</button>
+            <select class="nav-button" id="this-month">This Month</select>
+            <select class="nav-button" id="this-year">This Year</select>
+            <button class="nav-button" id="next-month">&gt;</button>
+        </div>
+
+        <br>
+
+        <table id="calendar-table">
+            <thead id="calendar-head">
+                <tr>
+                    <th style="background-color: #c8707E;">Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th style="background-color: #678fae;">Sat</th>
+                </tr>
+            </thead>
+
+            <tbody id="calendar-body">
+                <tr class="week" id="1st"></tr>
+                <tr class="week" id="2nd"></tr>
+                <tr class="week" id="3rd"></tr>
+                <tr class="week" id="4th"></tr>
+                <tr class="week" id="5th"></tr>
+                <tr class="week" id="6th"></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="account-book" id="account-book">
+        <div class="record">
+            <div class="record" id="monthly-record">
+                <label style="font-weight: bold;">monthly-record</label>
+                <p></p>
+                <table id="monthly-table">
+                    <thead id="monthly-head">
+                        <tr>
+                            <th>Spending</th>
+                            <th>Income</th>
+                            <th>Sum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-body">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p></p>
+            <div class="record" id="weekly-record">
+                <label style="font-weight: bold;">weekly-record</label>
+                <p></p>
+                <table id="weekly-table">
+                    <thead id="weekly-head">
+                        <tr>
+                            <th>Spending</th>
+                            <th>Income</th>
+                            <th>Sum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weekly-body">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="record" id="daily-record">
+            <label style="font-weight: bold;">daily-record</label>
+            <p></p>
+            <table id="daily-table">
+                <thead id="daily-head">
+                    <tr>
+                        <th>Item</th>
+                        <th>Spending</th>
+                        <th>Income</th>
+                    </tr>
+                </thead>
+                <tbody id="daily-body">
+                    <tr id="item-spend-income">
+                        <td style="position: relative;">
+                            <button style="position: absolute; top: 0; left: 0;">&#45;</button>
+                            <span>item</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Sum</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button>&plus;</button>
+        </div>
+    </div>
+    <script src="ho_calendar.js"></script>
+    <script src="ho_accountbook.js"></script>
+</body>
+
+</html>
