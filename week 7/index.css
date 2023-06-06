@@ -1,0 +1,193 @@
+:root{
+    /* 휘뚜루마뚜루 회색 */
+    --gray : #ddd; 
+    /* todo-bottom의 버튼:hover, input-form의 complete-all-btn */
+    --btn-hover : #D0C9C0;
+    /* todo-bottom의 버튼.selected */
+    --selected : #6D8B74;
+    /* title */
+    --title : #5F7161;
+    /* complete-all-btn.checked */
+    --yellow : #F4A442;
+    /* background color */
+    --background-color : #F5F5F5;
+}
+
+*{
+    margin : 0;
+    padding : 0;
+    cursor: default;
+}
+
+input{
+    border: none;
+}
+
+button{
+    border : none;
+    background-color: transparent;
+    cursor : pointer;
+}
+
+ul{
+    list-style: none;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    min-height: 100%;
+    background-color: var(--background-color);
+    display: flex;
+    flex-wrap: nowrap;  
+    justify-content: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10rem;
+
+}
+
+.todo-title{
+    color : var(--title);
+    padding: 3rem;
+}
+
+.todo-container{
+    background-color: white;
+    border : 1px solid var(--gray);
+    width: 500px;
+}
+
+.input-form{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    height: 2rem;
+    border-bottom: 1px solid var(--gray);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.complete-all-btn{
+    color : var(--btn-hover);
+    width: 1.5rem;
+    height: 1.5rem;
+    margin : 0.5rem;
+    border-radius: 25%;
+    border : 1px solid var(--gray);
+}
+
+.complete-all-btn.checked{
+    color : var(--yellow);
+}
+
+.todo-input{
+    width : 80%;
+    text-align: center;
+    font-size: .8rem;
+}
+
+.enter{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin : 0.5rem;
+    border-radius: 25%;
+    border : 1px solid var(--gray);
+}
+
+.todo-item{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height : 2rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.delBtn{
+    opacity: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin : 0.5rem;
+    border-radius: 25%;
+    border : 1px solid var(--gray);
+    transition: .6s;
+}
+
+.todo-item:hover .delBtn{
+    opacity: 1;
+}
+
+.checkbox{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin : 0.5rem;
+    border-radius: 25%;
+    border : 1px solid var(--gray);
+}
+
+.todo-item.checked .checkbox{
+    color : var(--gray);
+}
+
+.content{
+    font-size : 0.8rem;
+    width : 80%;
+    text-align: center;
+}
+
+.todo-item.checked .content{
+    font-style: italic;
+    color : var(--gray);
+    text-decoration: line-through;
+}
+
+.todo-bottom{
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.btn-group button{
+    padding: 0.2rem 0.5rem;
+    height: 1.5rem;
+    margin : 0.5rem;
+    border-radius: 6px;
+    border : 1px solid var(--gray);
+    transition: .6s;
+}
+
+.btn-group button:hover{
+    color :white;
+    background-color: var(--btn-hover);
+}
+
+.btn-group button.selected{
+    color :white;
+    background-color: var(--selected);
+}
+
+.left-items{
+    font-size: 0.8rem;
+}
+
+.edit-input{
+    z-index: 100;
+    position: absolute;
+    /* background-color: #F4A442; */
+    left : 0;
+    height : 1.5rem;
+    width : 100%;
+    text-align: center;
+}
