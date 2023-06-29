@@ -1,6 +1,6 @@
 function leftTodo(Todo){//남은 할일 업데이트
     let sum = 0;
-    Todo.order.forEach((v)=>{
+    Todo.todoItems.forEach((v)=>{
         if(!v.state){
             sum += 1;
         }
@@ -8,7 +8,7 @@ function leftTodo(Todo){//남은 할일 업데이트
 
     const leftItems = document.getElementsByClassName("left-items")[0];
     if(Todo.mode === 2){
-        sum = Todo.order.length - sum;
+        sum = Todo.todoItems.length - sum;
         leftItems.innerText = `🥕 오늘 끝낸 일이 ${sum}개 있습니다 🥕`;
     }else{
         leftItems.innerText = `🥕 오늘 할 일이 ${sum}개 남았습니다 🥕`;
@@ -51,11 +51,11 @@ export function renderTodo(Todo) { //Todo-list 태그 렌더링
         todoList.firstChild.remove();
     }
 
-    Todo.order.forEach(function(todoItem){
+    Todo.todoItems.forEach(function(todoItem){
         const view = todoItem.state;
-        if(Todo.mode === 1 && view === true){
+        if(Todo.mode === Todo.ACTIVE_MODE.get() && view === true){
             return;
-        }else if(Todo.mode === 2 && view === false){
+        }else if(Todo.mode === Todo.COMPLETED_MODE.get() && view === false){
             return;
         }
         const li = document.createElement("li");

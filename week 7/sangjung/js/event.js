@@ -19,7 +19,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         active.setAttribute('class', 'show-active-btn');
         all.setAttribute('class', 'show-all-btn selected');
         Todo.clear();
-        Todo.defaultMode();
+        Todo.DEFAULT_MODE.set();
         renderTodo(Todo);
     });
     
@@ -27,7 +27,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.setAttribute('class', 'show-completed-btn');
         active.setAttribute('class', 'show-active-btn');
         all.setAttribute('class', 'show-all-btn selected');
-        Todo.allMode();
+        Todo.ALL_MODE.set();
         renderTodo(Todo);
     });
 
@@ -35,7 +35,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.setAttribute('class', 'show-completed-btn');
         active.setAttribute('class', 'show-active-btn selected');
         all.setAttribute('class', 'show-all-btn');
-        Todo.activeMode();
+        Todo.ACTIVE_MODE.set();
         renderTodo(Todo);
     });
     
@@ -43,7 +43,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.setAttribute('class', 'show-completed-btn selected');
         active.setAttribute('class', 'show-active-btn');
         all.setAttribute('class', 'show-all-btn');
-        Todo.compltedMode();
+        Todo.COMPLETED_MODE.set();
         renderTodo(Todo);
     });
 }
