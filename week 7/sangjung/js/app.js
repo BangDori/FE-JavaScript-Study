@@ -9,7 +9,7 @@ function init(){ //최초 실행 함수
     const Todo = class { //Todo list를 담기 위한 클래스
         
         static mode = 0;
-        static order = []; //Todo의 정보들을 리스트형태로 저장
+        static todoItems = []; //Todo의 정보들을 리스트형태로 저장
 
         constructor(content, state = false){
             this.content = content;
