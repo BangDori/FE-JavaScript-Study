@@ -1,49 +1,49 @@
 export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤트 할당
-    const TODO_INPUT = document.getElementsByClassName('todo-input')[0];
-    const ENTER = document.getElementsByClassName('enter')[0];
-    const ALL = document.getElementById('all');
-    const ACTIVE = document.getElementById('active');
-    const COMPLETED = document.getElementById('completed');
-    const CLEAR = document.getElementById('clear');
+    const todoInput = document.getElementsByClassName('todo-input')[0];
+    const enter = document.getElementsByClassName('enter')[0];
+    const all = document.getElementById('all');
+    const active = document.getElementById('active');
+    const completed = document.getElementById('completed');
+    const clear = document.getElementById('clear');
     
-    TODO_INPUT.addEventListener('keyup', function(e){
+    todoInput.addEventListener('keyup', function(e){
         if(e.keyCode === 13){
-            addTodo(Todo,TODO_INPUT);
+            addTodo(Todo,todoInput);
         }
     });
-    ENTER.addEventListener('click', function(){
-        addTodo(Todo,TODO_INPUT);
+    enter.addEventListener('click', function(){
+        addTodo(Todo,todoInput);
     });
-    CLEAR.addEventListener('click', function(){
-        COMPLETED.setAttribute('class', 'show-completed-btn');
-        ACTIVE.setAttribute('class', 'show-active-btn');
-        ALL.setAttribute('class', 'show-all-btn selected');
+    clear.addEventListener('click', function(){
+        completed.setAttribute('class', 'show-completed-btn');
+        active.setAttribute('class', 'show-active-btn');
+        all.setAttribute('class', 'show-all-btn selected');
         Todo.clear();
-        Todo.mode = 0;
+        Todo.defaultMode();
         renderTodo(Todo);
     });
     
-    ALL.addEventListener('click', function(){
-        COMPLETED.setAttribute('class', 'show-completed-btn');
-        ACTIVE.setAttribute('class', 'show-active-btn');
-        ALL.setAttribute('class', 'show-all-btn selected');
-        Todo.mode = 0;
+    all.addEventListener('click', function(){
+        completed.setAttribute('class', 'show-completed-btn');
+        active.setAttribute('class', 'show-active-btn');
+        all.setAttribute('class', 'show-all-btn selected');
+        Todo.allMode();
         renderTodo(Todo);
     });
 
-    ACTIVE.addEventListener('click', function(){
-        COMPLETED.setAttribute('class', 'show-completed-btn');
-        ACTIVE.setAttribute('class', 'show-active-btn selected');
-        ALL.setAttribute('class', 'show-all-btn');
-        Todo.mode = 1;
+    active.addEventListener('click', function(){
+        completed.setAttribute('class', 'show-completed-btn');
+        active.setAttribute('class', 'show-active-btn selected');
+        all.setAttribute('class', 'show-all-btn');
+        Todo.activeMode();
         renderTodo(Todo);
     });
     
-    COMPLETED.addEventListener('click', function(){
-        COMPLETED.setAttribute('class', 'show-completed-btn selected');
-        ACTIVE.setAttribute('class', 'show-active-btn');
-        ALL.setAttribute('class', 'show-all-btn');
-        Todo.mode = 2;
+    completed.addEventListener('click', function(){
+        completed.setAttribute('class', 'show-completed-btn selected');
+        active.setAttribute('class', 'show-active-btn');
+        all.setAttribute('class', 'show-all-btn');
+        Todo.compltedMode();
         renderTodo(Todo);
     });
 }

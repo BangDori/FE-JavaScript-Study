@@ -1,15 +1,14 @@
 export function initClock(){
-    const CLOCK = document.getElementsByClassName('todo-title')[0];
+    const clock = document.getElementsByClassName('todo-title')[0];
     function startClock(){
-        const NOW = new Date();
-        const END = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate() + 1,0,0,0);
-        const DIF = END- NOW
-        const HOUR = String(NOW.getHours()).padStart(2,"0");
-        const MINUTE = String(NOW.getMinutes()).padStart(2,"0");
-        const SECOND = String(NOW.getSeconds()).padStart(2,"0");
-        CLOCK.innerHTML = `${HOUR}:${MINUTE}:${SECOND}`;
+        const now = new Date();
+        const hour = String(now.getHours()).padStart(2,"0");
+        const minut = String(now.getMinutes()).padStart(2,"0");
+        const second = String(now.getSeconds()).padStart(2,"0");
+        clock.innerHTML = `${hour}:${minut}:${second}`;
     
     }
+    startClock();
     setInterval(startClock, 1000);
 }
 

@@ -6,17 +6,17 @@ function leftTodo(Todo){//남은 할일 업데이트
         }
     })
 
-    const LEFT_ITEMS = document.getElementsByClassName("left-items")[0];
+    const leftItems = document.getElementsByClassName("left-items")[0];
     if(Todo.mode === 2){
         sum = Todo.order.length - sum;
-        LEFT_ITEMS.innerText = `🥕 오늘 끝낸 일이 ${sum}개 있습니다 🥕`;
+        leftItems.innerText = `🥕 오늘 끝낸 일이 ${sum}개 있습니다 🥕`;
     }else{
-        LEFT_ITEMS.innerText = `🥕 오늘 할 일이 ${sum}개 남았습니다 🥕`;
+        leftItems.innerText = `🥕 오늘 할 일이 ${sum}개 남았습니다 🥕`;
     }
 }
 
 function validation(Todo, value){// input에 입력된 값의 중복, 공백여부 판단
-    if (value.length === 0 || value.trim().length === 0){
+    if (value.trim().length === 0){
         alert("todo can not be empty");
         return 0;
     }
@@ -31,14 +31,14 @@ function validation(Todo, value){// input에 입력된 값의 중복, 공백여�
     return 3;
 }
 
-export function addTodo(Todo,TODO_INPUT) { // Todo 추가
-    switch (validation(Todo, TODO_INPUT.value)){
+export function addTodo(Todo,todoInput) { // Todo 추가
+    switch (validation(Todo, todoInput.value)){
         case 0:
-            TODO_INPUT.value = "";
+            todoInput.value = "";
             break;
         case 3:
-            new Todo(TODO_INPUT.value); // Todo 클래스의 스태틱 배열에 바로 값을 추가함
-            TODO_INPUT.value = "";
+            new Todo(todoInput.value); // Todo 클래스의 스태틱 배열에 바로 값을 추가함
+            todoInput.value = "";
             renderTodo(Todo);
             break;
     }
@@ -46,77 +46,77 @@ export function addTodo(Todo,TODO_INPUT) { // Todo 추가
 
 export function renderTodo(Todo) { //Todo-list 태그 렌더링
     leftTodo(Todo);//남은 할 일 업데이트
-    const TODO_LIST = document.getElementsByClassName("todo-list")[0];
-    while(TODO_LIST.firstChild){
-        TODO_LIST.firstChild.remove();
+    const todoList = document.getElementsByClassName("todo-list")[0];
+    while(todoList.firstChild){
+        todoList.firstChild.remove();
     }
 
     Todo.order.forEach(function(todoItem){
-        const VIEW = todoItem.state;
-        if(Todo.mode === 1 && VIEW === true){
+        const view = todoItem.state;
+        if(Todo.mode === 1 && view === true){
             return;
-        }else if(Todo.mode === 2 && VIEW === false){
+        }else if(Todo.mode === 2 && view === false){
             return;
         }
-        const LI = document.createElement("li");
-        const CHECKBOX = document.createElement("button");
-        const DELBTN = document.createElement("button");
-        const INPUT = document.createElement("input");
+        const li = document.createElement("li");
+        const checkbox = document.createElement("button");
+        const delbtn = document.createElement("button");
+        const input = document.createElement("input");
 
-        LI.setAttribute("class", "todo-item");
-        LI.setAttribute("id", `todo_${todoItem.getOrder()}`);
-        CHECKBOX.setAttribute("class", "checkbox");
-        CHECKBOX.innerText = "✔︎";
-        DELBTN.setAttribute("class", "delBtn");
-        DELBTN.innerText = "🗑️";
+        li.setAttribute("class", "todo-item");
+        li.setAttribute("id", `todo_${todoItem.getOrder()}`);
+        checkbox.setAttribute("class", "checkbox");
+        checkbox.innerText = "✔︎";
+        delbtn.setAttribute("class", "delBtn");
+        delbtn.innerText = "🗑️";
 
-        INPUT.setAttribute("class", "content");
-        INPUT.setAttribute("type", "text");
-        INPUT.setAttribute("placeholder", "할 일을 입력하세요!");
-        INPUT.setAttribute("value", todoItem.content);
-        if(VIEW){
-            LI.setAttribute("class", "todo-item checked");
-            INPUT.readOnly =true;
+        input.setAttribute("class", "content");
+        input.setAttribute("type", "text");
+        input.setAttribute("placeholder", "할 일을 입력하세요!");
+        input.setAttribute("value", todoItem.content);
+        if(view){
+            li.setAttribute("class", "todo-item checked");
+            input.readOnly =true;
         }
 
-        LI.appendChild(CHECKBOX);
-        LI.appendChild(INPUT);
-        LI.appendChild(DELBTN);
-        TODO_LIST.appendChild(LI);
+        li.appendChild(checkbox);
+        li.appendChild(input);
+        li.appendChild(delbtn);
+        todoList.appendChild(li);
     })
 }
 
 export function initTodoEvent(Todo) { //초기 이벤트 설정
-    const TODO_LIST = document.getElementsByClassName("todo-list")[0];
-    TODO_LIST.addEventListener("click", function(e){
-        const TARGET = e.target;
+    const todoList = document.getElementsByClassName("todo-list")[0];
+    todoList.addEventListener("click", function(e){
+        const target = e.target;
         
-        if (TARGET.classList.contains("checkbox")){
-            const LI = TARGET.closest("li");
-            const IDX = Number(LI.id.slice(5, LI.id.length));
-            const TODO_ITEM = Todo.get(IDX);
+        if (target.classList.contains("checkbox")){
+            const li = target.closest("li");
+            const idx = Number(li.id.slice(5, li.id.length));
+            const todoItem = Todo.get(idx);
 
-            TODO_ITEM.state = !TODO_ITEM.state;
+            todoItem.state = !todoItem.state;
             renderTodo(Todo);
-        }else if(TARGET.classList.contains("delBtn")){
-            const LI = TARGET.closest("li");
-            const IDX = Number(LI.id.slice(5, LI.id.length));
+        }else if(target.classList.contains("delBtn")){
+            const li = target.closest("li");
+            const idx = Number(li.id.slice(5, li.id.length));
 
-            Todo.remove(IDX);
+            Todo.remove(idx);
             renderTodo(Todo);
         }
     });
 
-    TODO_LIST.addEventListener("focusout", function(e){
-        const TARGET = e.target;
+    todoList.addEventListener("focusout", function(e){
+        const target = e.target;
         
-        if (TARGET.classList.contains("content")){
-            const LI = TARGET.closest("li");
-            const IDX = Number(LI.id.slice(5, LI.id.length));
+        if (target.classList.contains("content")){
+            const li = target.closest("li");
+            const idx = Number(li.id.slice(5, li.id.length));
 
-            if (TARGET.value !== Todo.get(IDX).content){
-                if (validation(Todo, TARGET.value, true) === 3){
-                    Todo.get(IDX).content = TARGET.value;
+            if (target.value !== Todo.get(idx).content){
+                if (validation(Todo, target.value, true) === 3){
+                    Todo.get(idx).content = target.value;
                 }
             }
             renderTodo(Todo);
