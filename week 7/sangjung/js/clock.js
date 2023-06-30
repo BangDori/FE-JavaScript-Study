@@ -1,12 +1,8 @@
 export function initClock(){
-    const clock = document.getElementsByClassName('todo-title')[0];
+    const clock = document.querySelector('.todo-title');
     function startClock(){
         const now = new Date();
-        const hour = String(now.getHours()).padStart(2,"0");
-        const minut = String(now.getMinutes()).padStart(2,"0");
-        const second = String(now.getSeconds()).padStart(2,"0");
-        clock.innerHTML = `${hour}:${minut}:${second}`;
-    
+        clock.textContent = String(now).substring(16,24);
     }
     startClock();
     setInterval(startClock, 1000);

@@ -6,37 +6,37 @@ function leftTodo(Todo){//남은 할일 업데이트
         }
     })
 
-    const leftItems = document.getElementsByClassName("left-items")[0];
-    if(Todo.mode === 2){
+    const leftItems = document.querySelector(".left-items");
+    if(Todo.mode === Todo.COMPLETED_MODE.get()) {
         sum = Todo.todoItems.length - sum;
-        leftItems.innerText = `🥕 오늘 끝낸 일이 ${sum}개 있습니다 🥕`;
+        leftItems.textContent = `🥕 오늘 끝낸 일이 ${sum}개 있습니다 🥕`;
     }else{
-        leftItems.innerText = `🥕 오늘 할 일이 ${sum}개 남았습니다 🥕`;
+        leftItems.textContent = `🥕 오늘 할 일이 ${sum}개 남았습니다 🥕`;
     }
 }
 
 function validation(Todo, value){// input에 입력된 값의 중복, 공백여부 판단
     if (value.trim().length === 0){
         alert("todo can not be empty");
-        return 0;
+        return 'empty';
     }
     if (value.length > 25 ){
         alert("todo is too long");
-        return 1;
+        return 'long';
     }
     if (Todo.has(value)){
         alert("todo already exists");
-        return 2;
+        return 'exists';
     }
-    return 3;
+    return true;
 }
 
 export function addTodo(Todo,todoInput) { // Todo 추가
     switch (validation(Todo, todoInput.value)){
-        case 0:
+        case 'empty':
             todoInput.value = "";
             break;
-        case 3:
+        case true:
             new Todo(todoInput.value); // Todo 클래스의 스태틱 배열에 바로 값을 추가함
             todoInput.value = "";
             renderTodo(Todo);
@@ -46,7 +46,7 @@ export function addTodo(Todo,todoInput) { // Todo 추가
 
 export function renderTodo(Todo) { //Todo-list 태그 렌더링
     leftTodo(Todo);//남은 할 일 업데이트
-    const todoList = document.getElementsByClassName("todo-list")[0];
+    const todoList = document.querySelector(".todo-list");
     while(todoList.firstChild){
         todoList.firstChild.remove();
     }
@@ -63,19 +63,19 @@ export function renderTodo(Todo) { //Todo-list 태그 렌더링
         const delbtn = document.createElement("button");
         const input = document.createElement("input");
 
-        li.setAttribute("class", "todo-item");
-        li.setAttribute("id", `todo_${todoItem.getOrder()}`);
-        checkbox.setAttribute("class", "checkbox");
+        li.className = "todo-item";
+        li.dataset.order = todoItem.getOrder();
+        checkbox.className = "checkbox";
         checkbox.innerText = "✔︎";
-        delbtn.setAttribute("class", "delBtn");
+        delbtn.className = "delBtn";
         delbtn.innerText = "🗑️";
 
-        input.setAttribute("class", "content");
-        input.setAttribute("type", "text");
-        input.setAttribute("placeholder", "할 일을 입력하세요!");
-        input.setAttribute("value", todoItem.content);
+        input.className = "content";
+        input.type = "text";
+        input.placeholder = "할 일을 입력하세요!";
+        input.value = todoItem.content;
         if(view){
-            li.setAttribute("class", "todo-item checked");
+            li.className = "todo-item checked";
             input.readOnly =true;
         }
 
@@ -87,20 +87,20 @@ export function renderTodo(Todo) { //Todo-list 태그 렌더링
 }
 
 export function initTodoEvent(Todo) { //초기 이벤트 설정
-    const todoList = document.getElementsByClassName("todo-list")[0];
+    const todoList = document.querySelector(".todo-list");
     todoList.addEventListener("click", function(e){
         const target = e.target;
         
         if (target.classList.contains("checkbox")){
             const li = target.closest("li");
-            const idx = Number(li.id.slice(5, li.id.length));
+            const idx = li.dataset.order;
             const todoItem = Todo.get(idx);
 
             todoItem.state = !todoItem.state;
             renderTodo(Todo);
         }else if(target.classList.contains("delBtn")){
             const li = target.closest("li");
-            const idx = Number(li.id.slice(5, li.id.length));
+            const idx = li.dataset.order;
 
             Todo.remove(idx);
             renderTodo(Todo);
@@ -112,10 +112,10 @@ export function initTodoEvent(Todo) { //초기 이벤트 설정
         
         if (target.classList.contains("content")){
             const li = target.closest("li");
-            const idx = Number(li.id.slice(5, li.id.length));
+            const idx = li.dataset.order;
 
             if (target.value !== Todo.get(idx).content){
-                if (validation(Todo, target.value, true) === 3){
+                if (validation(Todo, target.value, true) === true){
                     Todo.get(idx).content = target.value;
                 }
             }
