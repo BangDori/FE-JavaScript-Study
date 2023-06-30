@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoList</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+
+  
+  <body>
+    <div class="wrapper">
+
+      <h1 class="todo-title" id ="timer">15:00:00</h1>
+      
+      <div class="todo-container">
+
+        <div class="input-form">
+          <button class="complete-all-btn">✔︎</button>
+          <input
+            type="text"
+            class="todo-input"
+            placeholder="할 일을 입력하세요!"
+          />
+          <button class="enter">⏎</button>
+        </div>
+
+        <ul class="todo-list"></ul>
+        
+        <div class="todo-bottom">
+          <div class="left-items">🥕 오늘 할 일이 0개 남았습니다 🥕</div>
+          <div class="btn-group">
+            <button class="show-all-btn selected" id="all">모두 보기</button>
+            <button class="show-active-btn" id="active">남은 일</button>
+            <button class="show-completed-btn" id="completed">끝낸 일</button>
+            <button class="clear-all-btn" id="clear">모두 지우기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <script type="module" src="./js/clock.js"></script>
+    <script type="module" src="./js/todo.js"></script>
+    <script type="module" src="./js/event.js"></script>
+    <script type="module" src="./js/app.js"></script>
+
+  </body>
+
+
+</html>
