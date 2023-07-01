@@ -19,7 +19,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         active.className = "show-active-btn";
         all.className = "show-all-btn selected";
         Todo.clear();
-        Todo.mode.set(Todo.mode.ALL_MODE);
+        Todo.mode.set(Todo.DEFAULT_MODE);
         renderTodo(Todo);
     });
     
@@ -27,7 +27,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.className = "show-completed-btn";
         active.className = 'show-active-btn';
         all.className = "show-all-btn selected";
-        Todo.mode.set(Todo.mode.ALL_MODE);
+        Todo.mode.set(Todo.ALL_MODE);
         renderTodo(Todo);
     });
 
@@ -35,7 +35,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.className = "show-completed-btn";
         active.className = "show-active-btn selected";
         all.className = "show-all-btn";
-        Todo.mode.set(Todo.mode.ACTIVE_MODE);
+        Todo.mode.set(Todo.ACTIVE_MODE);
         renderTodo(Todo);
     });
     
@@ -43,7 +43,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         completed.className = "show-completed-btn selected";
         active.className = "show-active-btn";
         all.className = "show-all-btn";
-        Todo.mode.set(Todo.mode.COMPLETED_MODE);
+        Todo.mode.set(Todo.COMPLETED_MODE);
         renderTodo(Todo);
     });
 }

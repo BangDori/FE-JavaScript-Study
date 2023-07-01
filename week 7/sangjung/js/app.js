@@ -8,15 +8,23 @@ function init(){ //최초 실행 함수
 
     const Todo = class { //Todo list를 담기 위한 클래스
 
+        static get DEFAULT_MODE(){
+            return 0;
+        }
+        static get ALL_MODE(){
+            return 0;
+        }
+        static get ACTIVE_MODE(){
+            return 1;
+        }
+        static get COMPLETED_MODE(){
+            return 2;
+        }
         static mode = (function(){
             let mode = 'ALL';
             return Object.freeze({
-                DEFAULT_MODE: 'ALL',
-                ALL_MODE: 'ALL',
-                ACTIVE_MODE: 'ACTIVE',
-                COMPLETED_MODE: 'COMPLETED',
                 set(pMode){
-                    if (pMode === 'ALL' || pMode === 'ACTIVE' || pMode === 'COMPLETED'){
+                    if (pMode in [0,1,2]){
                         mode = pMode;
                     }
                 },
