@@ -1,7 +1,5 @@
 import {initEvent} from './event.js';
-import {addTodo} from './todo.js';
-import {renderTodo} from './todo.js';
-import {initTodoEvent} from './todo.js';
+import {addTodo, renderTodo, initTodoEvent} from './todo.js';
 import {initClock} from './clock.js';
 
 function init(){ //최초 실행 함수
