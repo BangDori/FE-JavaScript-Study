@@ -6,66 +6,62 @@ import {initClock} from './clock.js';
 
 function init(){ //최초 실행 함수
  
-    const Todo =  (function(){
+    const Todo =   class { //Todo list를 담기 위한 클래스
+        static get DEFAULT_MODE(){
+            return 0;
+        }
+        static get ALL_MODE(){
+            return 0;
+        }
+        static get ACTIVE_MODE(){
+            return 1;
+        }
+        static get COMPLETED_MODE(){
+            return 2;
+        }
+        static get mode(){
+            return Todo.#mode;
+        }
+        static set mode(pMode){
+            if (pMode in [0,1,2]){
+                Todo.#mode = pMode;
+            }
+        }
+        static #mode = 0;
 
-        let mode = 0;
-        return class { //Todo list를 담기 위한 클래스
+        static todoItems = []; //Todo의 정보들을 리스트형태로 저장
 
-            static get DEFAULT_MODE(){
-                return 0;
-            }
-            static get ALL_MODE(){
-                return 0;
-            }
-            static get ACTIVE_MODE(){
-                return 1;
-            }
-            static get COMPLETED_MODE(){
-                return 2;
-            }
-            static get mode(){
-                return mode;
-            }
-            static set mode(pMode){
-                if (pMode in [0,1,2]){
-                    mode = pMode;
-                }
-            }
+        constructor(content, state = false){
+            this.content = content;
+            this.state = state;
+            Todo.todoItems.unshift(this);
+        }
 
-            static todoItems = []; //Todo의 정보들을 리스트형태로 저장
-
-            constructor(content, state = false){
-                this.content = content;
-                this.state = state;
-                Todo.todoItems.unshift(this);
+        getOrder(){
+            return Todo.todoItems.indexOf(this);
+        }
+    
+        static has(value){
+            const todoArray = Array.from(Todo.todoItems, (v) => v.content);
+            if (todoArray.includes(value)){
+                return true;
             }
-
-            getOrder(){
-                return Todo.todoItems.indexOf(this);
-            }
-        
-            static has(value){
-                const todoArray = Array.from(Todo.todoItems, (v) => v.content);
-                if (todoArray.includes(value)){
-                    return true;
-                }
-                return false;
-            }
-        
-            static get(idx){
-                return Todo.todoItems[idx];
-            }
-        
-            static remove(idx){
-                Todo.todoItems.splice(idx, 1);
-            }
-        
-            static clear(){
-                Todo.todoItems = [];
-            }
-        
-       }
-    }());
+            return false;
+        }
+    
+        static get(idx){
+            return Todo.todoItems[idx];
+        }
+    
+        static remove(idx){
+            Todo.todoItems.splice(idx, 1);
+        }
+    
+        static clear(){
+            Todo.todoItems = [];
+        }
+    
+    }
     
     // 실시간 타이머 표시
     initClock();
