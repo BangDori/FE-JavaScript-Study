@@ -1,4 +1,4 @@
-export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤트 할당
+export const initEvent = (Todo, addTodo, renderTodo) => { // 버튼들한테 이벤트 할당
     const todoInput = document.querySelector('.todo-input');
     const enter = document.querySelector('.enter');
     const all = document.getElementById('all');
@@ -6,15 +6,15 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
     const completed = document.getElementById('completed');
     const clear = document.getElementById('clear');
     
-    todoInput.addEventListener('keyup', function(e){
+    todoInput.addEventListener('keyup', (e) =>{
         if(e.key === "Enter"){
             addTodo(Todo,todoInput);
         }
     });
-    enter.addEventListener('click', function(){
+    enter.addEventListener('click', () =>{
         addTodo(Todo,todoInput);
     });
-    clear.addEventListener('click', function(){
+    clear.addEventListener('click', () =>{
         completed.className = "show-completed-btn";
         active.className = "show-active-btn";
         all.className = "show-all-btn selected";
@@ -23,7 +23,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         renderTodo(Todo);
     });
     
-    all.addEventListener('click', function(){
+    all.addEventListener('click', () =>{
         completed.className = "show-completed-btn";
         active.className = 'show-active-btn';
         all.className = "show-all-btn selected";
@@ -31,7 +31,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         renderTodo(Todo);
     });
 
-    active.addEventListener('click', function(){
+    active.addEventListener('click', () =>{
         completed.className = "show-completed-btn";
         active.className = "show-active-btn selected";
         all.className = "show-all-btn";
@@ -39,7 +39,7 @@ export function initEvent(Todo, addTodo, renderTodo){ // 버튼들한테 이벤�
         renderTodo(Todo);
     });
     
-    completed.addEventListener('click', function(){
+    completed.addEventListener('click', () =>{
         completed.className = "show-completed-btn selected";
         active.className = "show-active-btn";
         all.className = "show-all-btn";

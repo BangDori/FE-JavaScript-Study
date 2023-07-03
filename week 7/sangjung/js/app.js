@@ -2,7 +2,7 @@ import {initEvent} from './event.js';
 import {addTodo, renderTodo, initTodoEvent} from './todo.js';
 import {initClock} from './clock.js';
 
-function init(){ //최초 실행 함수
+const init = () => { //최초 실행 함수
  
     const Todo =   class { //Todo list를 담기 위한 클래스
         static get DEFAULT_MODE(){
@@ -68,6 +68,6 @@ function init(){ //최초 실행 함수
     //입력 버튼 및 보기 버튼 이벤트 추가 함수
     initEvent(Todo, addTodo, renderTodo);
 
-}
+};
 
 document.addEventListener('load',init());
