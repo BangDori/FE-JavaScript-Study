@@ -1,109 +1,87 @@
 import { todoAdd } from './todo.js';
+import { todoState } from './todo.js';
+import { hal1Check } from './todo.js';
 
-export function todoEvent(TD){                                            //이벤트 초기 세팅
-    const todoClick = document.querySelector(".enter");                  //할 일 추가(클릭)
-    const todoEnter = document.querySelector(".todo-input");              //할 일 추가(엔터)
-    const completeAllBtn = document.querySelector(".complete-all-btn");   //모두 선택
-    const allBtn = document.getElementById("all");                        //모두 보기              
-    const activeBtn = document.getElementById("active");                  //남은 일     
+export function todoEvent() {                                             //이벤트 초기 세팅
+    const clickAddBtn = document.querySelector(".enter");                 //할 일 추가(클릭)
+    const enterAddBtn = document.querySelector(".todo-input");            //할 일 추가(엔터)
+    const allCompleteBtn = document.querySelector(".complete-all-btn");   //모두 완료
+    const allSeeBtn = document.getElementById("all");                     //모두 보기              
+    const remainBtn = document.getElementById("active");                  //남은 일     
     const completedBtn = document.getElementById("completed");            //끝낸 일
-    const clearBtn = document.getElementById("clear");                    //모두 지우기           
+    const allDeleteBtn = document.getElementById("clear");                //모두 지우기           
 
-    todoClick.addEventListener("click", function(){ clickAddBtn(TD); });
-    todoEnter.addEventListener("keydown", function(event){ enterAddBtn(event,TD); });
-    completeAllBtn.addEventListener("click", function(){ allCheckBtn(TD); });
-    allBtn.addEventListener("click", function(){ allSeeBtn(TD); });
-    activeBtn.addEventListener("click", function(){ remainBtn(TD); });
-    completedBtn.addEventListener("click", function(){ doneBtn(TD); }); 
-    clearBtn.addEventListener("click", function(){ allDelBtn(TD); });
+    clickAddBtn.addEventListener("click", () => { todoAdd(); });          //todo추가
+    enterAddBtn.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") todoAdd();                             //todo추가
+    });
 
+    allCompleteBtn.addEventListener("click", () => {                      //모두 완료
+        todoState.state.forEach((item, index) => {
+            todoState.state[index] = true;
+            const todo_item = document.getElementsByClassName("todo-item")[index];
+            todo_item.classList.add('checked');
+        });
+        hal1Check();
+    });
+
+    allSeeBtn.addEventListener("click", () => {                           //모두 보기
+        for (let todo_item of document.getElementsByClassName("todo-item"))
+            todo_item.style.display = '';
+    });
+
+    remainBtn.addEventListener("click", () => { doneToggle(true); });     //남은 일
+    
+    completedBtn.addEventListener("click", () => { doneToggle(false); }); //끝낸 일
+
+    allDeleteBtn.addEventListener("click", () => {                        //모두 지우기
+        Array.from(document.getElementsByClassName("todo-item")).forEach( (todo_item) =>{
+            todo_item.remove();
+        });
+
+        todoState.words = [];                                             //전부 초기화
+        todoState.state = [];
+        todoState.length = 0;
+        hal1Check();
+    });
 }
 
-function clickAddBtn(TD){                                  //할 일 추가(클릭)
-    todoAdd(TD);                                      //todo추가
-}
-function enterAddBtn(event,TD){                            //할 일 추가(엔터)
-    if (event.key === "Enter" ) todoAdd(TD);         //todo추가
-}
-
-function allCheckBtn(TD){                                  // 전체 클릭(모두 완료)
-    for (let i = 0; i < TD.length; i++) {
-        TD.done[i] = true;
-        const todo_ltem = document.getElementsByClassName("todo-item")[i];
-        todo_ltem.classList.add('checked');
-    }
-    TD.hal1();
+function doneToggle(judge) {   //상태 토글
+    Array.from(document.getElementsByClassName("todo-item")).forEach((todo_item, index) => {
+        if (todoState.state[index] === judge) todo_item.style.display = 'none';
+        else todo_item.style.display = '';
+    })
 }
 
-function allSeeBtn(TD){                                   //모두 보기
-    for (let i = 0; i < TD.length; i++) {
-        const todo_ltem = document.getElementsByClassName("todo-item")[i];
-        todo_ltem.style.display = '';
-    }
+export function clickCheckBtn(event) { // 남은 일, 끝낸 일 설정 함수
+    const checkbox = event.target;          //checkbox
+    const todo_item = checkbox.parentNode;  //todo-item
+    const length = checkbox.dataset.key;    //버튼 키 값(length)
+
+    todoState.state[length] = !todoState.state[length]; //state 값 토글
+    todo_item.classList.toggle('checked');  //css 토글    
+    hal1Check();
 }
 
-function remainBtn(TD){                                   //남은 일
-    doneToggle(TD,true);
-}
-
-function doneBtn(TD){                                     //끝낸 일
-    doneToggle(TD,false);
-}
-
-function doneToggle(TD, judge){
-    for (let i = 0; i < TD.length; i++) {  
-        if (TD.done[i] == judge) {
-            const todo_ltem = document.getElementsByClassName("todo-item")[i];
-            todo_ltem.style.display = 'none';
-        }
-        else {
-            const todo_ltem = document.getElementsByClassName("todo-item")[i];
-            todo_ltem.style.display = '';
-        }
-    }
-}
-
-function allDelBtn(TD){                                 //모두 지우기
-    const todo_item = document.getElementsByClassName("todo-item");
-    for (let i = 0; i < TD.length; i++) todo_item[0].remove();
-
-    TD.words = [];  //전부 초기화
-    TD.done = [];
-    TD.length = 0;
-    TD.hal1();
-}
-
-export function clickCheckBtn(event,TD){               // 남은 일, 끝낸 일 설정 함수
-    const checkbox = event.target; //checkbox
-    const todo_item = checkbox.parentNode; //todo-item
-    const length = checkbox.dataset.key; //버튼 키 값(length)
-
-    TD.done[length] = TD.done[length] == true ? false : true; //done 값 토글
-    todo_item.classList.toggle('checked'); //css 토글    
-    TD.hal1();
-}
-
-export function clickDelBtn(event,TD){                //del 버튼 누를 시 삭제
-    const checkbox = event.target; //delBtn
-    const todo_item = checkbox.parentNode; //todo-item
+export function clickDelBtn(event) {   //del 버튼 누를 시 삭제
+    const checkbox = event.target;          //delBtn
+    const todo_item = checkbox.parentNode;  //todo-item
     const todo_list = todo_item.parentNode; //todo-list
-    const length = checkbox.dataset.key; //버튼 키 값(length)
+    const btnKey = checkbox.dataset.key;    //버튼 키 값(length)
 
-    TD.words.splice(length,1);  //모든 정보 삭제
-    TD.done.splice(length,1);
-    
-    setDataKey(todo_list,length,TD);  //키 값 재정렬
-    TD.length--;
+    todoState.words.splice(btnKey, 1);      //모든 정보 삭제
+    todoState.state.splice(btnKey, 1);
+    todoState.length--;
     todo_item.remove();
-    
-    TD.hal1();
+
+    setDataKey(todo_list);                  //키 값 재정렬
+    hal1Check();
 }
 
-function setDataKey(todo_list,length,TD){                    // data-key 값 재설정(del버튼 시)    
-    for(let i = Number(length)+1 ; i<TD.length; i++){
-        const setCheck = todo_list.getElementsByClassName("checkbox")[i];
-        const setDel = todo_list.getElementsByClassName("delBtn")[i];
-        setCheck.setAttribute("data-key",i-1);
-        setDel.setAttribute("data-key",i-1);
-    }
+function setDataKey(todo_list) { // data-key 값 재설정(del버튼 시)   
+    Array.from(todo_list.getElementsByClassName("checkbox")).forEach((setCheck, index) => {
+        const setodoStateel = todo_list.getElementsByClassName("delBtn")[index];
+        setCheck.setAttribute("data-key", index);
+        setodoStateel.setAttribute("data-key", index);
+    })
 }
