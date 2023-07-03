@@ -71,6 +71,28 @@ function addList(e) {
     // Temporarily save selected list contents
     let tmp;
     txtCnt.addEventListener('click', (e) => { tmp = txtCnt.value; });
+    txtCnt.addEventListener('focusin', (e) => { tmp = txtCnt.value; });
+    txtCnt.addEventListener('focusout', (e) => {
+        e.preventDefault();
+        txtCnt.blur();
+        const contents = txtCnt.value.trim();
+
+        // Space character checking
+        if (contents === "") {
+            txtCnt.value = tmp;
+            tmp = "";
+            return;
+        }
+
+        // Duplicate checking
+        if (duplicateCheck2(contents)) {
+            txtCnt.value = tmp;
+            tmp = "";
+            return;
+        }
+
+        txtCnt.value = contents;
+    });
     txtCnt.addEventListener('keyup', (e) => {
         if (e.keyCode === 13) {
             e.preventDefault();
@@ -85,7 +107,7 @@ function addList(e) {
             }
 
             // Duplicate checking
-            if (duplicateCheck(contents)) {
+            if (duplicateCheck2(contents)) {
                 txtCnt.value = tmp;
                 tmp = "";
                 return;
@@ -124,6 +146,15 @@ function duplicateCheck(contents) {
     for (entry of todoList.children)
         if (entry.children[1].value === contents)
             return true;
+    return false;
+}
+
+function duplicateCheck2(contents) {
+    let flag = false;
+    for (entry of todoList.children)
+        if (entry.children[1].value === contents)
+            if (flag) return true;
+            else flag = true;
     return false;
 }
 
