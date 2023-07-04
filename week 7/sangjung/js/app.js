@@ -1,30 +1,31 @@
 import {initEvent} from './event.js';
-import {addTodo} from './todo.js';
-import {renderTodo} from './todo.js';
-import {initTodoEvent} from './todo.js';
+import {addTodo, renderTodo, initTodoEvent} from './todo.js';
 import {initClock} from './clock.js';
 
-function init(){ //최초 실행 함수
-
-    const Todo = class { //Todo list를 담기 위한 클래스
-
-        static mode = (function(){
-            let mode = 'ALL';
-            return Object.freeze({
-                DEFAULT_MODE: 'ALL',
-                ALL_MODE: 'ALL',
-                ACTIVE_MODE: 'ACTIVE',
-                COMPLETED_MODE: 'COMPLETED',
-                set(pMode){
-                    if (pMode === 'ALL' || pMode === 'ACTIVE' || pMode === 'COMPLETED'){
-                        mode = pMode;
-                    }
-                },
-                get(){
-                    return mode;
-                }
-            });
-        }());
+const init = () => { //최초 실행 함수
+ 
+    const Todo =   class { //Todo list를 담기 위한 클래스
+        static get DEFAULT_MODE(){
+            return 0;
+        }
+        static get ALL_MODE(){
+            return 0;
+        }
+        static get ACTIVE_MODE(){
+            return 1;
+        }
+        static get COMPLETED_MODE(){
+            return 2;
+        }
+        static get mode(){
+            return Todo.#mode;
+        }
+        static set mode(pMode){
+            if (pMode in [0,1,2]){
+                Todo.#mode = pMode;
+            }
+        }
+        static #mode = 0;
 
         static todoItems = []; //Todo의 정보들을 리스트형태로 저장
 
@@ -67,6 +68,6 @@ function init(){ //최초 실행 함수
     //입력 버튼 및 보기 버튼 이벤트 추가 함수
     initEvent(Todo, addTodo, renderTodo);
 
-}
+};
 
 document.addEventListener('load',init());
