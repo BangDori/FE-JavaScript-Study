@@ -36,12 +36,10 @@ export const renderTodo = (() => {
             todoList.firstChild.remove();
         }
     
-        Todo.todoItems.forEach(function(todoItem){
+        Todo.todoItems.forEach((todoItem) => {
             const view = todoItem.state;
     
-            if(!view){
-                sum++;
-            }
+            view ? null : sum++;
             if(Todo.mode === Todo.ACTIVE_MODE && view === true){
                 return;
             }else if(Todo.mode === Todo.COMPLETED_MODE && view === false){
@@ -86,7 +84,7 @@ export const renderTodo = (() => {
 
 export const initTodoEvent = (Todo) => { //초기 이벤트 설정
     const todoList = document.querySelector(".todo-list");
-    todoList.addEventListener("click", function(e){
+    todoList.addEventListener("click", (e)=>{
         const target = e.target;
         
         if (target.classList.contains("checkbox")){
@@ -105,7 +103,7 @@ export const initTodoEvent = (Todo) => { //초기 이벤트 설정
         }
     });
 
-    todoList.addEventListener("focusout", function(e){
+    todoList.addEventListener("focusout", (e)=>{
         const target = e.target;
         
         if (target.classList.contains("content")){

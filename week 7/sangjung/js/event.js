@@ -15,34 +15,30 @@ export const initEvent = (Todo, addTodo, renderTodo) => { // 버튼들한테 이
         addTodo(Todo,todoInput);
     });
     clear.addEventListener('click', () =>{
-        completed.className = "show-completed-btn";
-        active.className = "show-active-btn";
-        all.className = "show-all-btn selected";
+        document.querySelector('.selected').classList.remove("selected");
+        all.classList.add("selected");
         Todo.clear();
         Todo.mode=Todo.DEFAULT_MODE;
         renderTodo(Todo);
     });
     
     all.addEventListener('click', () =>{
-        completed.className = "show-completed-btn";
-        active.className = 'show-active-btn';
-        all.className = "show-all-btn selected";
+        document.querySelector('.selected').classList.remove("selected");
+        all.classList.add("selected");
         Todo.mode=Todo.ALL_MODE;
         renderTodo(Todo);
     });
 
     active.addEventListener('click', () =>{
-        completed.className = "show-completed-btn";
-        active.className = "show-active-btn selected";
-        all.className = "show-all-btn";
+        document.querySelector('.selected').classList.remove("selected");
+        active.classList.add("selected");
         Todo.mode=Todo.ACTIVE_MODE;
         renderTodo(Todo);
     });
     
     completed.addEventListener('click', () =>{
-        completed.className = "show-completed-btn selected";
-        active.className = "show-active-btn";
-        all.className = "show-all-btn";
+        document.querySelector('.selected').classList.remove("selected");
+        completed.classList.add("selected");
         Todo.mode=Todo.COMPLETED_MODE;
         renderTodo(Todo);
     });

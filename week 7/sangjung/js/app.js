@@ -32,7 +32,7 @@ const init = () => { //최초 실행 함수
         constructor(content, state = false){
             this.content = content;
             this.state = state;
-            Todo.todoItems.unshift(this);
+            Todo.todoItems = [this, ...Todo.todoItems];
         }
 
         getOrder(){
@@ -40,11 +40,7 @@ const init = () => { //최초 실행 함수
         }
     
         static has(value){
-            const todoArray = Array.from(Todo.todoItems, (v) => v.content);
-            if (todoArray.includes(value)){
-                return true;
-            }
-            return false;
+            return Todo.todoItems.find((v) => v.content === value)
         }
     
         static get(idx){
