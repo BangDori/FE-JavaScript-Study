@@ -135,17 +135,29 @@ export const activeEventListner = () => {
     });
 
     // Update
-    todoList.addEventListener("dblclick", (event) => {
+    todoList.addEventListener("focusin", (event) => {
         if (event.target.className === "content") {
-            event.target.addEventListener('keydown', (event) => {
-                if (event.key === "Enter") {
-                    const itemId = parseInt(event.target.parentNode.id);
-                    updateTodo(itemId);
-                    renderTodo();
-                }
-            });
+          const inputElement = event.target;
+          const previousValue = inputElement.value;
+          console.log("1 " + previousValue);
+      
+          const focusoutListener = () => {
+            const currentValue = inputElement.value;
+            console.log("2 " + currentValue);
+      
+            if (currentValue !== previousValue) {
+              const itemId = parseInt(inputElement.parentNode.id);
+              updateTodo(itemId);
+              renderTodo();
+            }
+      
+            inputElement.removeEventListener("focusout", focusoutListener);
+          };
+      
+          inputElement.addEventListener("focusout", focusoutListener);
         }
-    });
+      });
+      
 
     todoList.addEventListener("click", (event) => {
         if (event.target.className === "checkbox") {
